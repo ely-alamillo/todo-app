@@ -41,6 +41,7 @@ const showAllTasks = (req, res) => {
       sendUserError(err, res);
       return;
     }
+    
     res.json(tasks);
   });
 };
