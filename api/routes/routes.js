@@ -1,6 +1,6 @@
 const routes = (server) => {
   const userControllers = require('../controllers/userControllers');
-  // const taskControllers = require('../controllers/taskControllers');
+  const taskControllers = require('../controllers/taskControllers');
 
   server.route('/showUsers')
     .get(userControllers.showAllUsers);
@@ -11,7 +11,13 @@ const routes = (server) => {
   server.route('/logout')
     .post(userControllers.logOut);
   server.route('/verify')
-    .get(userControllers.verify)
+    .get(userControllers.verify);
+
+  // task routes
+  server.route('/showAllTasks')
+    .get(taskControllers.showAllTasks);
+  server.route('/createTask')
+    .post(taskControllers.verifyUserLoggedIn, taskControllers.addTask);
 };
 
 module.exports = { routes };
