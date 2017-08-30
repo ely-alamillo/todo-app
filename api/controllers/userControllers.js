@@ -83,11 +83,10 @@ const logIn = (req, res) => {
         return;
       }
       // req.session.user = user.username;
-      req.session.save((err) => {
-        req.session.user = user.username;
-        console.log(req.session);
-        res.send({ login: 'sucessfull login attempt' });
-      });
+
+      req.session.user = user.username;
+      console.log(req.session);
+      res.send({ login: 'sucessfull login attempt' });
       // console.log(req.session);
       // res.send({ login: 'sucessfull login attempt' });
     })

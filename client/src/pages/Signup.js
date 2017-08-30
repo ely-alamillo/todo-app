@@ -32,7 +32,7 @@ export default class Signup extends Component {
     axios.post('http://localhost:3030/signup', user)
       .then((data) => {
 
-        localStorage.setItem('user', data.data.userSaved.username)
+        // localStorage.setItem('user', data.data.userSaved.username)
         setTimeout(() => {
           window.location = '/tasks';
         });

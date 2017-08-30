@@ -31,9 +31,9 @@ export default class Signup extends Component {
       .then((data) => {
         console.log(data);
         // localStorage.setItem('user', data.data.userSaved.username)
-        setTimeout(() => {
-          window.location = '/tasks';
-        });
+        // setTimeout(() => {
+        //   window.location = '/tasks';
+        // });
       })
       .catch((error) => {
         console.log('err: ', error)
