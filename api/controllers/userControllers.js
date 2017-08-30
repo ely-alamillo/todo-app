@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 // const session = require('express-session');
 
-const User = require('../models/userModels');
+const { User } = require('../models/userModels');
 
 const SERVER_USER_ERROR = 422;
 
@@ -49,7 +49,14 @@ const createUser = (req, res) => {
         sendUserError(saveErr, res);
         return;
       }
-      res.json({ userSaved: user });
+      req.session.user = user.username;
+      req.session.save((err) => {
+        console.log(req.session);
+        res.json({ userSaved: user });
+      });
+      // console.log(req.session);
+      // res.json({ userSaved: user });
+      // res.send('hello')
     })
   });
 };
@@ -75,8 +82,14 @@ const logIn = (req, res) => {
         sendUserError('bad credentials', res);
         return;
       }
-      req.session.user = user.username;
-      res.send({ login: 'sucessfull login attempt' });
+      // req.session.user = user.username;
+      req.session.save((err) => {
+        req.session.user = user.username;
+        console.log(req.session);
+        res.send({ login: 'sucessfull login attempt' });
+      });
+      // console.log(req.session);
+      // res.send({ login: 'sucessfull login attempt' });
     })
   });
 };

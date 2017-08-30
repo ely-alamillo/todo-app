@@ -11,6 +11,8 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
+    "connect-livereload": "^0.6.0",
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "mongoose": "^4.11.9"

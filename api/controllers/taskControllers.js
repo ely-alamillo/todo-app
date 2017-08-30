@@ -1,5 +1,5 @@
-const Task = require('../models/taskModel');
-const User = require('../models/userModels');
+// const Task = require('../models/taskModel');
+const { User, Task } = require('../models/userModels');
 
 const SERVER_USER_ERROR = 422;
 
@@ -22,6 +22,7 @@ const sendUserError = (err, res) => {
 
 const verifyUserLoggedIn = (req, res, next) => {
   const { user } = req.session;
+  console.log(req.session);
   if (!user) {
     sendUserError('please log in', res);
     return;
@@ -41,7 +42,7 @@ const showAllTasks = (req, res) => {
       sendUserError(err, res);
       return;
     }
-    
+
     res.json(tasks);
   });
 };
@@ -49,8 +50,8 @@ const showAllTasks = (req, res) => {
 const addTask = (req, res) => {
   const { user } = req.session;
   const { task } = req.body;
+  console.log(task);
 
-  // console.log(req.session);
   if (!user) {
     sendUserError('no user is logged in', res);
     return;
@@ -64,23 +65,28 @@ const addTask = (req, res) => {
       sendUserError('bad request', res);
       return;
     }
-    const newTask = new Task({ task, createdBy: foundUser._id });
+    const taskToCreate = { task, completed: false };
+    const newTask = new Task(taskToCreate)
     newTask.save((err, savedTask) => {
       if (err) {
         sendUserError(err, res);
         return;
       }
-      Task.findById(savedTask._id)
-        .populate('createdBy', 'username')
-        .exec((err, populatedTask) => {
-          if (err) {
-            sendUserError(err);
-            return;
-          }
-          res.json(populatedTask);
-        });
-      // res.json(savedTask);
-    })
+      foundUser.tasks.push(savedTask);
+      foundUser.save((error, savedTask) => {
+        console.log(savedTask);
+        User.findById(savedTask._id)
+          .populate('tasks')
+          .exec((err, populatedTask) => {
+            if (err) {
+              sendUserError(err, res);
+              return;
+            }
+            res.json(populatedTask);
+            console.log(populatedTask);
+          })
+      });
+    });
   });
 };
 

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
+
+import Signup from './pages/Signup'
+import Success from './pages/Success'
+import Login from './pages/Login'
+import Tasks from './pages/Tasks'
+// import * as Pages from './pages'
 import './App.css';
 
 class App extends Component {
@@ -7,12 +13,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>todo app</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          im the navbar soon...
         </p>
+
+        {/* <Route path='/' exact component={ Pages.Login }></Route> */}
+        <Route path='/signup' component={ Signup }></Route>
+        <Route path='/login' component={ Login }></Route>
+        <Route path='/tasks' component={ Tasks }></Route>
       </div>
     );
   }
