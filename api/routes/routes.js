@@ -15,7 +15,7 @@ const routes = (server) => {
 
   // task routes
   server.route('/showAllTasks')
-    .get(taskControllers.showAllTasks);
+    .get(taskControllers.verifyUserLoggedIn, taskControllers.showAllTasks);
   server.route('/createTask')
     .post(taskControllers.verifyUserLoggedIn, taskControllers.addTask);
 };
