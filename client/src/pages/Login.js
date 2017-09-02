@@ -27,13 +27,14 @@ export default class Signup extends Component {
     const username = this.state.username;
     const password = this.state.password;
     const user = { username, password }
+    axios.defaults.withCredentials = true;
     axios.post('http://localhost:3030/login', user)
       .then((data) => {
         console.log(data);
-        // localStorage.setItem('user', data.data.userSaved.username)
-        // setTimeout(() => {
-        //   window.location = '/tasks';
-        // });
+        localStorage.setItem('User', data.data.user )
+        setTimeout(() => {
+          window.location = '/tasks';
+        }, 1000);
       })
       .catch((error) => {
         console.log('err: ', error)

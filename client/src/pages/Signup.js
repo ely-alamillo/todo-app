@@ -29,6 +29,7 @@ export default class Signup extends Component {
     const username = this.state.username;
     const password = this.state.password;
     const user = { username, password }
+    axios.defaults.withCredentials = true;
     axios.post('http://localhost:3030/signup', user)
       .then((data) => {
 

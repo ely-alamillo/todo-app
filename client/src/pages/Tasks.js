@@ -7,9 +7,15 @@ export default class Tasks extends Component {
     super();
     this.state = {
       task: '',
+      listOfTasks: null,
+
     }
     this.handleTask = this.handleTask.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    // axios.get('http://localhost:3030/showAllTasks')
   }
   handleTask(event) {
     this.setState({ task: event.target.value})
@@ -17,15 +23,13 @@ export default class Tasks extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const task = this.state.task;
-    console.log('task: ', task);
+    this.setState({ task: ''});
     const newTask = { task: task };
-    console.log(newTask)
+    axios.defaults.withCredentials = true;
     axios.post('http://localhost:3030/createTask', newTask) // http://localhost:3030/signup
       .then((data) => {
-        console.log(data);
-        setTimeout(() => {
-          window.location = '/taskSaved'
-        }, 200);
+        console.log(data.data.tasks);
+        this.setState({ listOfTasks: data.data.tasks })
       })
       .catch((error) => {
         console.log('there is an error: ', error);
@@ -34,7 +38,7 @@ export default class Tasks extends Component {
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <FormGroup>
             <FormControl
               type='text'
@@ -43,8 +47,15 @@ export default class Tasks extends Component {
               onChange={this.handleTask}
             />
           </FormGroup>
+          <button className='btn btn-success' type='submit' > add todo</button>
         </form>
-        <button className='btn btn-success' onClick={this.handleSubmit} > add todo</button>
+        <ul>
+          {
+            this.state.listOfTasks.map((task) => {
+              return <li>{task.task}</li>
+            })
+          }
+        </ul>
       </div>
     )
   }
