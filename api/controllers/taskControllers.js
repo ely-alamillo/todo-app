@@ -37,14 +37,18 @@ const verifyUserLoggedIn = (req, res, next) => {
 };
 
 const showAllTasks = (req, res) => {
-  Task.find({}, (err, tasks) => {
+  const { user } = req.session;
+  User.findOne({ username: user }, (err, user) => {
     if (err) {
       sendUserError(err, res);
       return;
     }
-
-    res.json(tasks);
-  });
+    if (!user) {
+      sendUserError('bad user creds', res);
+      return;
+    }
+    res.json(user);
+  })
 };
 
 const addTask = (req, res) => {
@@ -83,7 +87,6 @@ const addTask = (req, res) => {
               return;
             }
             res.json(populatedTask);
-            console.log(populatedTask);
           })
       });
     });

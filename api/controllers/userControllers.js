@@ -82,13 +82,9 @@ const logIn = (req, res) => {
         sendUserError('bad credentials', res);
         return;
       }
-      // req.session.user = user.username;
-
       req.session.user = user.username;
       console.log(req.session);
-      res.send({ login: 'sucessfull login attempt' });
-      // console.log(req.session);
-      // res.send({ login: 'sucessfull login attempt' });
+      res.send({ user: user.username });
     })
   });
 };
