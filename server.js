@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
 const session = require('express-session');
 const cors = require('cors');
 
 // const bcrypt = require('bcrypt'); --> used in the userControllers
 
-// const corsOptions = {
-//     "origin": "*",
-//     "methods": "GET, HEAD, PUT, PATCH, POST, DELETE",
-//     "preflightContinue": false,
-//     "optionsSuccessStatus": 204
-// };
+const corsOptions = {
+    "origin": "http://localhost:3000",
+    "methods": "GET, HEAD, PUT, PATCH, POST, DELETE",
+    "preflightContinue": true,
+    "optionsSuccessStatus": 204,
+    "credentials": true, //enable cookies
+};
 
 const server = express();
 
@@ -29,7 +29,7 @@ server.use(session({
 server.set('trust proxy', 1)
 
 
-server.use(cors());
+server.use(cors(corsOptions));
 // server.use((req, res, next) => {
 //     res.setHeader("Access-Control-Allow-Origin", "*");
 //     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
