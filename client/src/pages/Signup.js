@@ -32,8 +32,7 @@ export default class Signup extends Component {
     axios.defaults.withCredentials = true;
     axios.post('http://localhost:3030/signup', user)
       .then((data) => {
-
-        // localStorage.setItem('user', data.data.userSaved.username)
+        localStorage.setItem('User', data.data.userSaved.username)
         setTimeout(() => {
           window.location = '/tasks';
         });

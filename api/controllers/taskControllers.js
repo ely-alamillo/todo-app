@@ -51,6 +51,20 @@ const showAllTasks = (req, res) => {
   })
 };
 
+const showUserTasks = (req, res) => {
+  const username = req.headers.username;
+  User.findOne({ username }, (err, user) => {
+    if (err) {
+      sendUserError('bad username', res);
+      return;
+    } else if (!user) {
+      sendUserError('user not found', res)
+      return;
+    }
+    res.json(user);
+  })
+};
+
 const addTask = (req, res) => {
   const { user } = req.session;
   const { task } = req.body;
@@ -96,5 +110,6 @@ const addTask = (req, res) => {
 module.exports = {
   showAllTasks,
   addTask,
-  verifyUserLoggedIn
+  verifyUserLoggedIn,
+  showUserTasks
 }

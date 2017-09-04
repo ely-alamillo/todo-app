@@ -83,7 +83,6 @@ const logIn = (req, res) => {
         return;
       }
       req.session.user = user.username;
-      console.log(req.session);
       res.send({ user: user.username });
     })
   });

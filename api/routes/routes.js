@@ -18,6 +18,8 @@ const routes = (server) => {
     .get(taskControllers.verifyUserLoggedIn, taskControllers.showAllTasks);
   server.route('/createTask')
     .post(taskControllers.verifyUserLoggedIn, taskControllers.addTask);
+  server.route('/showUserTasks')
+    .get(taskControllers.showUserTasks)
 };
 
 module.exports = { routes };

@@ -7,7 +7,7 @@ export default class Tasks extends Component {
     super();
     this.state = {
       task: '',
-      listOfTasks: null,
+      listOfTasks: [],
 
     }
     this.handleTask = this.handleTask.bind(this);
@@ -15,7 +15,15 @@ export default class Tasks extends Component {
   }
 
   componentWillMount() {
-    // axios.get('http://localhost:3030/showAllTasks')
+    const username = localStorage.getItem('User');
+    axios.defaults.headers.common['username'] = username;
+    axios.get('http://localhost:3030/showUserTasks')
+      .then((data) => {
+        this.setState({ listOfTasks: data.data.tasks})
+      })
+      .catch((err) => {
+        alert('error in mount axios call')
+      });
   }
   handleTask(event) {
     this.setState({ task: event.target.value})
@@ -51,8 +59,8 @@ export default class Tasks extends Component {
         </form>
         <ul>
           {
-            this.state.listOfTasks.map((task) => {
-              return <li>{task.task}</li>
+            this.state.listOfTasks.map((task, index) => {
+              return <li key={index}>{task.task}</li>
             })
           }
         </ul>
